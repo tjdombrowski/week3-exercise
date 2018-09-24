@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
  */
 
 @WebServlet(
-        urlPatterns = {"/welcome"}
+        urlPatterns = {"/"}
 )
 
 public class MessageSetter extends HttpServlet {
@@ -25,22 +25,35 @@ public class MessageSetter extends HttpServlet {
         String greetingTag;
         String additionalGreetingTag;
 
-        //retrieve date
-        MonthDay today = MonthDay.now();
-
         //retrieve time
         LocalTime currentTime = LocalTime.now();
 
+            if (currentTime >= new LocalTime("12:00:00")) {
+                greetingTag = "EveningGreeting";
+            } else {
+                greetingTag = "MorningGreeting";
+            }
+
+        //retrieve date
+        MonthDay today = MonthDay.now();
         switch (currentDate)
             case: MonthDay halloween = new MonthDay("09-24");
-                greetingTag = "HalloweenGreeting";
+                additionalGreetingTag = "HalloweenGreeting";
                 break;
             case: MonthDay christmas = new MonthDay("12-25");
-                greetingTag = "HolidayGreeting";
+                additionalGreetingTag = "HolidayGreeting";
                 break;
             default
-                greetingTag = "";
+                additionalGreetingTag = "";
                 break;
+
+
+        //Set attributes
+        req.setAttribute("greetingTag", greetingTag);
+        req.setAttribute("additionialGreetingTag", additionalGreetingTag);
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+        dispatcher.forward(req, resp);
 
     }
 }
