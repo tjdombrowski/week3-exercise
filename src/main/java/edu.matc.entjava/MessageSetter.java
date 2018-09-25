@@ -37,10 +37,10 @@ public class MessageSetter extends HttpServlet {
 
         //retrieve date
         MonthDay today = MonthDay.now();
-        if (today.equals(MonthDay.of(9, 25))) {
+        if (today.equals(MonthDay.of(10, 31))) {
             greeting.setAdditionalGreeting("HalloweenGreeting");
         } else if (today.equals(MonthDay.of(12, 25))) {
-            greeting.setAdditionalGreeting("HolidayGreeting");
+            greeting.setAdditionalGreeting("ChristmasGreeting");
         }
 
         //Set attributes

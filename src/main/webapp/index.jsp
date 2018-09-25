@@ -3,7 +3,6 @@
 
 <html>
 <body>
-<td:Hello />
 <form action="welcome" type="post">
     <input type="submit" value="Hello!" name="greeting">
 </form>

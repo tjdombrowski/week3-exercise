@@ -5,6 +5,7 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h2>${greeting.greeting}</h2>
+    <h2><td:Greeting messageType="${greeting.greeting}" /></h2>
+    <h2><td:HolidayGreeting messageType="${greeting.additionalGreeting}" /></h2>
 </body>
 </html>
