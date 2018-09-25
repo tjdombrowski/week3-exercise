@@ -1,5 +1,7 @@
 package edu.matc.controller;
 
+import edu.matc.entity.Greeting;
+
 import java.time.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,31 +24,29 @@ import org.apache.logging.log4j.Logger;
 public class MessageSetter extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String greetingTag = "";
-        String additionalGreetingTag = "";
+        Greeting greeting = new Greeting();
 
         //retrieve time
         LocalTime currentTime = LocalTime.now();
 
             if (currentTime.isAfter(LocalTime.of(12, 0, 0))) {
-                greetingTag = "EveningGreeting";
+                greeting.setGreeting("EveningGreeting");
             } else {
-                greetingTag = "MorningGreeting";
+                greeting.setGreeting("MorningGreeting");
             }
 
         //retrieve date
         MonthDay today = MonthDay.now();
         if (today.equals(MonthDay.of(9, 25))) {
-            additionalGreetingTag = "HalloweenGreeting";
+            greeting.setAdditionalGreeting("HalloweenGreeting");
         } else if (today.equals(MonthDay.of(12, 25))) {
-            additionalGreetingTag = "HolidayGreeting";
+            greeting.setAdditionalGreeting("HolidayGreeting");
         }
 
         //Set attributes
-        req.setAttribute("greetingTag", greetingTag);
-        req.setAttribute("additionialGreetingTag", additionalGreetingTag);
+        req.setAttribute("greeting", greeting);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/welcomePage.jsp");
         dispatcher.forward(req, resp);
 
     }
