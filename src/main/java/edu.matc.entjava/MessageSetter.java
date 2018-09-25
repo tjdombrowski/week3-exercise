@@ -16,19 +16,19 @@ import org.apache.logging.log4j.Logger;
  */
 
 @WebServlet(
-        urlPatterns = {"/"}
+        urlPatterns = {"/welcome"}
 )
 
 public class MessageSetter extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String greetingTag;
-        String additionalGreetingTag;
+        String greetingTag = "";
+        String additionalGreetingTag = "";
 
         //retrieve time
         LocalTime currentTime = LocalTime.now();
 
-            if (currentTime >= new LocalTime("12:00:00")) {
+            if (currentTime.isAfter(LocalTime.of(12, 0, 0))) {
                 greetingTag = "EveningGreeting";
             } else {
                 greetingTag = "MorningGreeting";
@@ -36,23 +36,17 @@ public class MessageSetter extends HttpServlet {
 
         //retrieve date
         MonthDay today = MonthDay.now();
-        switch (currentDate)
-            case: MonthDay halloween = new MonthDay("09-24");
-                additionalGreetingTag = "HalloweenGreeting";
-                break;
-            case: MonthDay christmas = new MonthDay("12-25");
-                additionalGreetingTag = "HolidayGreeting";
-                break;
-            default
-                additionalGreetingTag = "";
-                break;
-
+        if (today.equals(MonthDay.of(9, 25))) {
+            additionalGreetingTag = "HalloweenGreeting";
+        } else if (today.equals(MonthDay.of(12, 25))) {
+            additionalGreetingTag = "HolidayGreeting";
+        }
 
         //Set attributes
         req.setAttribute("greetingTag", greetingTag);
         req.setAttribute("additionialGreetingTag", additionalGreetingTag);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
 
     }
